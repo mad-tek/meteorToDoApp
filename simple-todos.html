@@ -1,0 +1,31 @@
+<!-- simple-todos.html -->
+<head>
+  <title>Todo List</title>
+</head>
+
+<body>
+  <div class="container">
+    <header>
+      <h1>Todo List</h1>
+      <form class="new-task">
+        <input type="text" name="text" placeholder="Type to add new tasks" />
+      </form>
+    </header>
+
+    <ul>
+      <!-- loops over the data from the method Template.body.helpers.tasks in simpletodo.js -->
+      {{#each tasks}}
+        {{> task}}
+      {{/each}}
+    </ul>
+  </div>
+</body>
+
+<!-- template only shows under {{> template name}} -->
+<template name="task">
+  <li class="{{#if checked}}checked{{/if}}">
+    <button class="delete">&times;</button>
+    <input type="checkbox" class="toggle-checked" checked="{{checked}}" />
+    <span class="text">{{text}}</span>
+  </li>
+</template>
