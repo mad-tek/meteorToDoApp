@@ -1,15 +1,25 @@
 <!-- simple-todos.html -->
 <head>
-  <title>Todo List</title>
+  <title>The Millionth To Do List</title>
 </head>
 
 <body>
   <div class="container">
     <header>
-      <h1>Todo List</h1>
+      <!-- incompleteCount is the method from Template.body.helpers that returns the count of checked tasks -->
+      <h1>Todo List ({{incompleteCount}})</h1>
+      <!-- button for hiding checked completed tasks -->
+      <label class="hide-completed">
+        <input type="checkbox" checked="{{hideCompleted}}" />
+        Hide Completed Tasks
+      </label>
+      {{> loginButtons}}
+      <!-- add new task -->
+      {{#if currentUser}}
       <form class="new-task">
         <input type="text" name="text" placeholder="Type to add new tasks" />
       </form>
+      {{/if}}
     </header>
 
     <ul>
@@ -23,9 +33,18 @@
 
 <!-- template only shows under {{> template name}} -->
 <template name="task">
-  <li class="{{#if checked}}checked{{/if}}">
+  <li class="{{#if checked}}checked{{/if}} {{#if private}}private{{/if}}">
     <button class="delete">&times;</button>
     <input type="checkbox" class="toggle-checked" checked="{{checked}}" />
-    <span class="text">{{text}}</span>
+    {{#if isOwner}}
+      <button class="toggle-private">
+        {{#if private}}
+          Private
+          {{else}}
+          Public
+        {{/if}}
+      </button>
+    {{/if}}
+    <span class="text"><strong>{{username}}</strong> - {{text}}</span>
   </li>
 </template>
